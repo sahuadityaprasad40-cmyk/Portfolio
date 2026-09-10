@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="100%" height="100%">
+  <defs>
+    <linearGradient id="neuro-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0B0C0E"/>
+      <stop offset="100%" stop-color="#18191E"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="450" fill="url(#neuro-grad)"/>
+
+  <!-- Schematic Bounding Frame -->
+  <rect x="25" y="25" width="750" height="400" fill="none" stroke="rgba(255, 255, 255, 0.08)" stroke-width="1"/>
+  <text x="45" y="55" fill="#FF6B00" font-family="monospace" font-size="12" letter-spacing="2">SYS.04 // NEUROSYNC BIOMETRIC SUITE</text>
+  <text x="610" y="55" fill="rgba(255,255,255,0.4)" font-family="monospace" font-size="11">SAMPLING: 120 HZ</text>
+
+  <!-- Multichannel EEG Waveform Tracks -->
+  <!-- Channel 1: Alpha Waves (8-12 Hz) -->
+  <text x="45" y="125" fill="#FFB693" font-family="monospace" font-size="10">CH.01 (ALPHA 10.2Hz)</text>
+  <path d="M 180 120 Q 220 90, 260 120 T 340 120 T 420 120 T 500 120 T 580 120 T 660 120 T 740 120" fill="none" stroke="#FF6B00" stroke-width="1.8"/>
+
+  <!-- Channel 2: Beta Waves (13-30 Hz) -->
+  <text x="45" y="195" fill="rgba(255,255,255,0.6)" font-family="monospace" font-size="10">CH.02 (BETA 22.4Hz)</text>
+  <path d="M 180 190 Q 200 170, 220 190 T 260 190 T 300 190 T 340 190 T 380 190 T 420 190 T 460 190 T 500 190 T 540 190 T 580 190 T 620 190 T 660 190 T 700 190 T 740 190" fill="none" stroke="#10B981" stroke-width="1.5"/>
+
+  <!-- Channel 3: Theta Waves (4-7 Hz) -->
+  <text x="45" y="265" fill="rgba(255,255,255,0.6)" font-family="monospace" font-size="10">CH.03 (THETA 6.1Hz)</text>
+  <path d="M 180 260 Q 250 220, 320 260 T 460 260 T 600 260 T 740 260" fill="none" stroke="#60A5FA" stroke-width="2"/>
+
+  <!-- FFT Spectrum Histogram Bars at bottom -->
+  <rect x="45" y="340" width="695" height="65" fill="#121316" stroke="rgba(255, 255, 255, 0.08)" rx="4"/>
+  <text x="60" y="360" fill="rgba(255, 255, 255, 0.4)" font-family="monospace" font-size="10">REAL-TIME FFT FREQUENCY SPECTRUM (0 - 60 Hz)</text>
+
+  <g transform="translate(60, 395)">
+    <!-- Discrete FFT frequency spectrum bars -->
+    <rect x="0" y="-18" width="6" height="18" fill="#FF6B00"/>
+    <rect x="10" y="-28" width="6" height="28" fill="#FF6B00"/>
+    <rect x="20" y="-22" width="6" height="22" fill="#FF6B00"/>
+    <rect x="30" y="-14" width="6" height="14" fill="#FF6B00"/>
+    <rect x="40" y="-32" width="6" height="32" fill="#FF6B00"/>
+    <rect x="50" y="-25" width="6" height="25" fill="#FF6B00"/>
+    <rect x="60" y="-10" width="6" height="10" fill="#10B981"/>
+    <rect x="70" y="-15" width="6" height="15" fill="#10B981"/>
+    <rect x="80" y="-30" width="6" height="30" fill="#10B981"/>
+    <rect x="90" y="-24" width="6" height="24" fill="#10B981"/>
+    <rect x="100" y="-18" width="6" height="18" fill="#10B981"/>
+    <rect x="110" y="-8" width="6" height="8" fill="#60A5FA"/>
+    <rect x="120" y="-12" width="6" height="12" fill="#60A5FA"/>
+    <rect x="130" y="-20" width="6" height="20" fill="#60A5FA"/>
+    <rect x="140" y="-16" width="6" height="16" fill="#60A5FA"/>
+    <rect x="150" y="-6" width="6" height="6" fill="#60A5FA"/>
+  </g>
+
+  <text x="240" y="385" fill="#F3F4F6" font-family="monospace" font-size="13">COHERENCE RATIO: <tspan fill="#10B981" font-weight="bold">0.941</tspan> // ARTIFACT REJECTION: <tspan fill="#FF6B00">ACTIVE</tspan></text>
+</svg>

@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aditya Prasad Sahu // Apex Telemetry Portfolio & Systems Engineer</title>
+  
+  <!-- SEO & Social Meta Tags -->
+  <meta name="description" content="Portfolio of Aditya Prasad Sahu - Full-Stack Systems Engineer specializing in distributed architectures, low-latency telemetry pipelines, deterministic physics simulations, and high-craft web interfaces." />
+  <meta name="author" content="Aditya Prasad Sahu" />
+  <meta name="keywords" content="Aditya Prasad Sahu, Systems Engineer, Telemetry, Full Stack Developer, Distributed Systems, Go, Rust, WebAssembly, WebGL, Real-Time" />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Aditya Prasad Sahu // Apex Telemetry Portfolio" />
+  <meta property="og:description" content="High-craft personal portfolio engineered at the intersection of aerospace telemetry, tactical HUDs, and distributed software systems." />
+  <meta property="og:image" content="assets/images/aegismed.svg" />
+  
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Aditya Prasad Sahu // Apex Telemetry Portfolio" />
+  <meta name="twitter:description" content="Full-stack systems engineer focused on high-throughput microservices, real-time data streaming, and zero-bloat web architecture." />
+  <meta name="twitter:image" content="assets/images/aegismed.svg" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+
+  <!-- Master Stylesheet -->
+  <link rel="stylesheet" href="css/main.css" />
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Aditya Prasad Sahu",
+    "jobTitle": "Full-Stack Systems Engineer & Software Architect",
+    "email": "sahuadityaprasad40@gmail.com",
+    "url": "https://github.com/sahuadityaprasad40-cmyk",
+    "sameAs": [
+      "https://github.com/sahuadityaprasad40-cmyk"
+    ],
+    "knowsAbout": [
+      "Distributed Systems",
+      "Real-Time Telemetry",
+      "WebSockets",
+      "Go",
+      "Rust",
+      "WebAssembly",
+      "WebGL",
+      "Vanilla Web Platform"
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <!-- ========================================================================
+       1. STICKY TELEMETRY HUD HEADER
+       ======================================================================== -->
+  <header class="telemetry-hud" role="banner">
+    <div class="container hud-inner">
+      
+      <!-- Brand & Callsign -->
+      <a href="#overview" class="hud-brand" aria-label="Aditya Prasad Sahu Home">
+        <svg width="18" height="18" viewBox="0 0 32 32" fill="none" stroke="#FF6B00" stroke-width="2">
+          <polygon points="16,4 28,16 16,28 4,16" />
+          <circle cx="16" cy="16" r="3" fill="#FF6B00" />
+        </svg>
+        <span>ADITYA PRASAD SAHU</span>
+        <span class="hud-callsign">// APEX-01</span>
+      </a>
+
+      <!-- Real-time Status Indicator LED -->
+      <div class="status-pill" title="Current Availability Status">
+        <span class="status-led" aria-hidden="true"></span>
+        <span>STATUS: ACTIVE_FOR_OPPORTUNITIES</span>
+      </div>
+
+      <!-- Live Clock Telemetry -->
+      <div class="hud-clock" id="telemetry-clock" aria-label="Synchronized Real-Time Clock">
+        --:--:-- UTC // --:--:-- LOC
+      </div>
+
+      <!-- Nav Anchors -->
+      <nav class="hud-nav" id="hud-nav" role="navigation" aria-label="Primary Navigation">
+        <a href="#overview" class="hud-nav-link active">
+          <span class="nav-idx">01.</span>OVERVIEW
+        </a>
+        <a href="#projects" class="hud-nav-link">
+          <span class="nav-idx">02.</span>PROJECTS
+        </a>
+        <a href="#arsenal" class="hud-nav-link">
+          <span class="nav-idx">03.</span>ARSENAL
+        </a>
+        <a href="#timeline" class="hud-nav-link">
+          <span class="nav-idx">04.</span>TIMELINE
+        </a>
+        <a href="#contact" class="hud-nav-link">
+          <span class="nav-idx">05.</span>CONTACT
+        </a>
+      </nav>
+
+      <!-- Tools Cluster -->
+      <div class="hud-tools">
+        <button id="terminal-open-btn" class="tool-btn" title="Open Interactive CLI Terminal (Hotkeys: ` or Ctrl+K)">
+          <span style="color: var(--color-primary); font-weight: bold;">&gt;_</span>
+          <span>CLI</span>
+          <kbd style="font-size: 9px; opacity: 0.6; padding: 1px 4px; background: var(--color-surface-1); border-radius: 2px;">~</kbd>
+        </button>
+
+        <button id="theme-toggle-btn" class="tool-btn" aria-label="Toggle Theme Mode">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+          </svg>
+          <span>LIGHT</span>
+        </button>
+
+        <button id="mobile-nav-toggle" class="tool-btn mobile-nav-toggle" aria-label="Toggle Navigation Menu">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       MAIN APPLICATION CONTENT
+       ======================================================================== -->
+  <main id="main-content">
+
+    <!-- 01 // HERO COMMAND SECTION -->
+    <section id="overview" class="telemetry-section" aria-labelledby="hero-title">
+      <div class="container hero-wrapper">
+        
+        <!-- Metadata Coordinates Strip -->
+        <div class="hero-meta-strip">
+          <div class="hero-coord-chip">
+            SYS.LOC // <span>20.2961° N, 85.8245° E [IN]</span>
+          </div>
+          <div class="hero-coord-chip">
+            SYS.ROLE // <span>FULL-STACK SYSTEMS ENGINEER &amp; ARCHITECT</span>
+          </div>
+          <div class="hero-coord-chip" id="session-uptime">
+            UPTIME // <span>00:00</span>
+          </div>
+          <div class="hero-coord-chip" id="telemetry-ping">
+            PING // <span>14ms</span>
+          </div>
+        </div>
+
+        <!-- Headline & Narrative -->
+        <h1 id="hero-title" class="display-hero hero-heading">
+          Engineering High-Throughput <span class="hero-highlight">Telemetry</span> &amp; Low-Latency Systems.
+        </h1>
+
+        <p class="body-lg hero-description">
+          I build resilient, data-dense software architectures at the intersection of distributed systems, real-time biometrics, deterministic simulation engines, and zero-bloat native web craft.
+        </p>
+
+        <!-- Action Trigger Cluster -->
+        <div class="hero-cta-cluster">
+          <a href="#contact" class="btn btn-primary btn-lg">
+            <span>[DEPLOY CONTACT →]</span>
+          </a>
+          <a href="#projects" class="btn btn-outline btn-lg">
+            <span>[INSPECT PROJECTS //]</span>
+          </a>
+          <a href="https://github.com/sahuadityaprasad40-cmyk" target="_blank" rel="noopener noreferrer" class="btn btn-ghost btn-lg">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            <span>CURRICULUM VITAE</span>
+          </a>
+        </div>
+
+        <!-- Quantitative Architectural Metrics -->
+        <div class="hero-metrics-grid" role="region" aria-label="System Performance Metrics">
+          <div class="metric-card">
+            <div class="metric-value">&lt; 15 ms</div>
+            <div class="metric-label">Inference &amp; Stream Latency</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-value">99.99%</div>
+            <div class="metric-label">Pipeline Availability SLA</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-value">60 FPS</div>
+            <div class="metric-label">Deterministic WebGL Render</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-value">0.0 MB</div>
+            <div class="metric-label">Runtime Framework Bloat</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 02 // FEATURED PROJECTS SHOWCASE -->
+    <section id="projects" class="telemetry-section" aria-labelledby="projects-heading">
+      <div class="container">
+        
+        <header class="section-header">
+          <div class="section-meta-rail">
+            <span>02 // ARCHITECTURAL SHOWCASE</span>
+          </div>
+          <h2 id="projects-heading" class="headline-lg">Featured Systems &amp; Case Studies</h2>
+          <p class="section-subtitle">
+            Engineered systems designed with high data density, real-time protocols, and verifiable performance outcomes.
+          </p>
+        </header>
+
+        <!-- Category Filter Bar -->
+        <div class="filter-rail" role="tablist" aria-label="Filter Projects by Domain">
+          <button class="filter-btn active" data-filter="ALL" role="tab" aria-selected="true">[ALL SYSTEMS]</button>
+          <button class="filter-btn" data-filter="SYSTEMS" role="tab" aria-selected="false">SYSTEMS &amp; ENGINES</button>
+          <button class="filter-btn" data-filter="FRONTEND" role="tab" aria-selected="false">FRONTEND &amp; TELEMETRY</button>
+          <button class="filter-btn" data-filter="APIS" role="tab" aria-selected="false">APIS &amp; CLOUD</button>
+        </div>
+
+        <!-- Dynamic Projects Grid (Populated via projects.js) -->
+        <div id="projects-container" class="projects-grid" role="region" aria-live="polite"></div>
+
+      </div>
+    </section>
+
+    <!-- 03 // TECHNICAL ARSENAL (SKILLS TELEMETRY) -->
+    <section id="arsenal" class="telemetry-section" aria-labelledby="arsenal-heading">
+      <div class="container">
+
+        <header class="section-header">
+          <div class="section-meta-rail">
+            <span>03 // TECHNICAL ARSENAL</span>
+          </div>
+          <h2 id="arsenal-heading" class="headline-lg">Competency Telemetry Matrix</h2>
+          <p class="section-subtitle">
+            Measured proficiency across core system layers, languages, networking protocols, and developer instrumentation.
+          </p>
+        </header>
+
+        <!-- Dynamic Skills Grid (Populated via main.js) -->
+        <div id="skills-container" class="skills-grid" role="region" aria-label="Skills Gauges"></div>
+
+      </div>
+    </section>
+
+    <!-- 04 // CHRONOLOGICAL MISSION LOG (TIMELINE) -->
+    <section id="timeline" class="telemetry-section" aria-labelledby="timeline-heading">
+      <div class="container">
+
+        <header class="section-header">
+          <div class="section-meta-rail">
+            <span>04 // MISSION LOG</span>
+          </div>
+          <h2 id="timeline-heading" class="headline-lg">Chronological Deployments &amp; Milestones</h2>
+          <p class="section-subtitle">
+            Engineering milestones, production responsibilities, and foundational academic accreditations.
+          </p>
+        </header>
+
+        <!-- Dynamic Timeline (Populated via main.js) -->
+        <div id="timeline-container" class="timeline-stream" role="region" aria-label="Experience Timeline"></div>
+
+      </div>
+    </section>
+
+    <!-- 05 // SIGNAL TRANSMISSION (CONTACT HUB) -->
+    <section id="contact" class="telemetry-section" aria-labelledby="contact-heading">
+      <div class="container">
+
+        <header class="section-header">
+          <div class="section-meta-rail">
+            <span>05 // SIGNAL TRANSMISSION</span>
+          </div>
+          <h2 id="contact-heading" class="headline-lg">Initiate Transmission</h2>
+          <p class="section-subtitle">
+            Direct communication funnel for engineering leadership, technical recruiters, and architectural collaborations.
+          </p>
+        </header>
+
+        <div class="contact-grid">
+          
+          <!-- Communication Coordinates Panel -->
+          <div class="contact-info-panel">
+            <div class="contact-comm-card">
+              <span class="telemetry-tag">DIRECT CHANNEL // VERIFIED</span>
+              <h3 class="headline-sm">Coordinate Access</h3>
+              <p class="body-sm">
+                Open to full-time engineering roles, high-impact distributed systems contracts, and architectural advisories.
+              </p>
+
+              <!-- One-click Email Copy Chip -->
+              <div class="quick-email-chip" id="copy-email-btn" role="button" tabindex="0" title="Click to copy email coordinates">
+                <span>sahuadityaprasad40@gmail.com</span>
+                <span class="telemetry-tag" style="color: var(--color-primary); display: inline-flex; align-items: center; gap: 4px;">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  </svg>
+                  [COPY]
+                </span>
+              </div>
+
+              <!-- Social Links Strip -->
+              <div class="social-telemetry-row">
+                <a href="https://github.com/sahuadityaprasad40-cmyk" target="_blank" rel="noopener noreferrer" class="social-link">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                  </svg>
+                  <span>GITHUB</span>
+                </a>
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-link">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                    <rect x="2" y="9" width="4" height="12"></rect>
+                    <circle cx="4" cy="4" r="2"></circle>
+                  </svg>
+                  <span>LINKEDIN</span>
+                </a>
+                <a href="mailto:sahuadityaprasad40@gmail.com" class="social-link">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                  </svg>
+                  <span>DIRECT MAIL</span>
+                </a>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Transmission Form -->
+          <form id="contact-form" class="transmission-form" novalidate>
+            <span class="telemetry-tag">DISPATCH PACKET // ENCRYPTED</span>
+            
+            <div class="form-field">
+              <label for="form-name" class="form-label">TRANSMITTER IDENTITY (NAME)</label>
+              <input type="text" id="form-name" class="form-input" placeholder="e.g. Lead Architect // Alex Vance" required />
+            </div>
+
+            <div class="form-field">
+              <label for="form-email" class="form-label">RETURN COORDINATES (EMAIL)</label>
+              <input type="email" id="form-email" class="form-input" placeholder="e.g. alex@engineering.corp" required />
+            </div>
+
+            <div class="form-field">
+              <label for="form-message" class="form-label">PAYLOAD (TRANSMISSION MESSAGE)</label>
+              <textarea id="form-message" class="form-textarea" placeholder="Detail project scope, opportunity parameters, or technical inquiry..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="align-self: flex-start; margin-top: 4px;">
+              <span>[DISPATCH TRANSMISSION →]</span>
+            </button>
+          </form>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================================
+       TACTICAL CLI TERMINAL OVERLAY
+       ======================================================================== -->
+  <div id="terminal-overlay" class="terminal-overlay" role="dialog" aria-modal="true" aria-label="Tactical Command Palette">
+    <div class="terminal-window">
+      
+      <div class="terminal-header">
+        <div class="terminal-title">
+          <span>&gt;_</span> APEX TELEMETRY CLI [V2026.1] // ACTIVE SESSION
+        </div>
+
+        <div class="terminal-quick-actions">
+          <button class="terminal-pill-btn" data-cmd="help">help</button>
+          <button class="terminal-pill-btn" data-cmd="about">about</button>
+          <button class="terminal-pill-btn" data-cmd="projects">projects</button>
+          <button class="terminal-pill-btn" data-cmd="skills">skills</button>
+          <button class="terminal-pill-btn" data-cmd="contact">contact</button>
+          <button class="terminal-pill-btn" data-cmd="clear">clear</button>
+          <button id="terminal-close-btn" class="terminal-close-btn" aria-label="Close Terminal">✕</button>
+        </div>
+      </div>
+
+      <div id="terminal-body" class="terminal-body">
+        <div class="terminal-line sys">=============================================================</div>
+        <div class="terminal-line sys">APEX TELEMETRY TERMINAL SHELL // ADITYA PRASAD SAHU</div>
+        <div class="terminal-line sys">Type 'help' for a full manifest of telemetry commands.</div>
+        <div class="terminal-line sys">Quick shortcuts: `~` or `Ctrl+K` to toggle. Press `Escape` to close.</div>
+        <div class="terminal-line sys">=============================================================</div>
+      </div>
+
+      <div class="terminal-input-row">
+        <span class="terminal-prompt-sym">guest@apex:~$</span>
+        <input type="text" id="terminal-input" class="terminal-input" autocomplete="off" spellcheck="false" placeholder="type a command (e.g. help, projects, skills)..." />
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" aria-live="polite"></div>
+
+  <!-- ========================================================================
+       FOOTER TELEMETRY STRIP
+       ======================================================================== -->
+  <footer class="telemetry-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div>
+        <span>ADITYA PRASAD SAHU</span> // &copy; 2026 APEX TELEMETRY. ALL RIGHTS RESERVED.
+      </div>
+      
+      <div class="footer-telemetry-nodes">
+        <div class="footer-node">BUILD // <span>2026.1-STABLE</span></div>
+        <div class="footer-node">ENGINE // <span>VANILLA ES6+</span></div>
+        <div class="footer-node">STATUS // <span>ALL SYSTEMS NOMINAL</span></div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Application Bootstrap -->
+  <script type="module" src="js/main.js"></script>
+
+</body>
+</html>

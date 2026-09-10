@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="100%" height="100%">
+  <defs>
+    <linearGradient id="cine-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0B0C0E"/>
+      <stop offset="100%" stop-color="#18191E"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="450" fill="url(#cine-grad)"/>
+
+  <!-- Schematic Bounding Frame -->
+  <rect x="25" y="25" width="750" height="400" fill="none" stroke="rgba(255, 255, 255, 0.08)" stroke-width="1"/>
+  <text x="45" y="55" fill="#FF6B00" font-family="monospace" font-size="12" letter-spacing="2">SYS.03 // CINESTREAM DISTRIBUTED PIPELINE</text>
+  <text x="600" y="55" fill="rgba(255,255,255,0.4)" font-family="monospace" font-size="11">BROADCAST: &lt;350 MS</text>
+
+  <!-- Network Pipeline Nodes -->
+  <!-- Ingest -->
+  <rect x="60" y="160" width="120" height="90" fill="#121316" stroke="rgba(255, 255, 255, 0.12)" rx="4"/>
+  <text x="75" y="190" fill="#FF6B00" font-family="monospace" font-size="11" font-weight="bold">INGESTION</text>
+  <text x="75" y="210" fill="rgba(255,255,255,0.6)" font-family="monospace" font-size="10">RTMP / SRT</text>
+  <text x="75" y="230" fill="#10B981" font-family="monospace" font-size="10">● ACTIVE</text>
+
+  <!-- Connection line 1 -->
+  <line x1="180" y1="205" x2="280" y2="205" stroke="#FF6B00" stroke-width="2"/>
+  <polygon points="280,205 270,199 270,211" fill="#FF6B00"/>
+
+  <!-- Sharding Transcoder -->
+  <rect x="280" y="130" width="160" height="150" fill="#121316" stroke="#FF6B00" stroke-width="1.5" rx="4"/>
+  <text x="295" y="160" fill="#FF6B00" font-family="monospace" font-size="12" font-weight="bold">TRANSCODE SHARD</text>
+  <line x1="295" y1="175" x2="425" y2="175" stroke="rgba(255, 255, 255, 0.08)"/>
+  <text x="295" y="195" fill="rgba(255,255,255,0.7)" font-family="monospace" font-size="10">4K60 (AV1) // 32 Mbps</text>
+  <text x="295" y="215" fill="rgba(255,255,255,0.7)" font-family="monospace" font-size="10">1080p (HEVC) // 8 Mbps</text>
+  <text x="295" y="235" fill="rgba(255,255,255,0.7)" font-family="monospace" font-size="10">720p (H.264) // 3 Mbps</text>
+  <text x="295" y="260" fill="#10B981" font-family="monospace" font-size="10">GPU ACCELERATED</text>
+
+  <!-- Connection line 2 -->
+  <line x1="440" y1="205" x2="540" y2="205" stroke="#FF6B00" stroke-width="2"/>
+  <polygon points="540,205 530,199 530,211" fill="#FF6B00"/>
+
+  <!-- Edge Distribution -->
+  <rect x="540" y="160" width="180" height="90" fill="#121316" stroke="rgba(255, 255, 255, 0.12)" rx="4"/>
+  <text x="555" y="190" fill="#FF6B00" font-family="monospace" font-size="11" font-weight="bold">EDGE BROADCAST</text>
+  <text x="555" y="210" fill="rgba(255,255,255,0.6)" font-family="monospace" font-size="10">WebRTC + HLS Edge</text>
+  <text x="555" y="230" fill="#10B981" font-family="monospace" font-size="10">8 REGIONAL NODES</text>
+
+  <!-- Audio and Video Track Meters at bottom -->
+  <rect x="45" y="355" width="340" height="50" fill="#121316" stroke="rgba(255, 255, 255, 0.08)" rx="4"/>
+  <text x="60" y="375" fill="rgba(255, 255, 255, 0.4)" font-family="monospace" font-size="10">AUDIO TELEMETRY</text>
+  <text x="60" y="395" fill="#F3F4F6" font-family="monospace" font-size="15" font-weight="bold">OPUS // 48kHz Stereo <tspan fill="#10B981" font-size="11">PASSED</tspan></text>
+
+  <rect x="400" y="355" width="340" height="50" fill="#121316" stroke="rgba(255, 255, 255, 0.08)" rx="4"/>
+  <text x="415" y="375" fill="rgba(255, 255, 255, 0.4)" font-family="monospace" font-size="10">NETWORK JITTER</text>
+  <text x="415" y="395" fill="#F3F4F6" font-family="monospace" font-size="15" font-weight="bold">1.8ms <tspan fill="#FF6B00" font-size="11">ULTRA-LOW</tspan></text>
+</svg>

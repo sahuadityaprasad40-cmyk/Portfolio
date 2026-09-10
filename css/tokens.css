@@ -1,0 +1,103 @@
+/**
+ * APEX TELEMETRY DESIGN TOKENS
+ * Derived from dark.md, light.md, and design.md
+ * Strict single source of truth for colors, typography, spacing, and elevation.
+ */
+
+:root {
+  /* Color Palette - Dark Mode (Default Obsidian HUD) */
+  --color-canvas-base: #0B0C0E;
+  --color-surface-1: #121316;
+  --color-surface-2: #18191E;
+  --color-surface-3: #22242B;
+  --color-surface-highest: #343538;
+  --color-surface-container: #1F1F23;
+  --color-surface-bright: #38393C;
+
+  /* Brand / Kinetic Accents */
+  --color-primary: #FF6B00;
+  --color-primary-dim: #FFB693;
+  --color-primary-glow: rgba(255, 107, 0, 0.2);
+  --color-secondary: #FF5722;
+  --color-tertiary: #FF8A3D;
+
+  /* Typography / Text Tones */
+  --color-text-primary: #F3F4F6;
+  --color-text-secondary: #D1D5DB;
+  --color-text-muted: #9CA3AF;
+  --color-text-dim: #6B7280;
+  --color-text-inverse: #0B0C0E;
+
+  /* Hairline Borders & Structural Rules */
+  --color-border-hairline: rgba(255, 255, 255, 0.08);
+  --color-border-subtle: rgba(255, 255, 255, 0.14);
+  --color-border-accent: rgba(255, 107, 0, 0.4);
+  --color-border-accent-subtle: rgba(255, 107, 0, 0.18);
+
+  /* Status Indicators */
+  --color-status-active: #10B981;
+  --color-status-active-glow: rgba(16, 185, 129, 0.3);
+  --color-status-warning: #F59E0B;
+  --color-status-error: #EF4444;
+
+  /* Typography Families */
+  --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, Menlo, monospace;
+
+  /* Spacing Scale (8px baseline) */
+  --spacing-xs: 0.25rem;   /* 4px */
+  --spacing-sm: 0.5rem;    /* 8px */
+  --spacing-md: 1rem;      /* 16px */
+  --spacing-lg: 1.5rem;    /* 24px */
+  --spacing-xl: 2.5rem;    /* 40px */
+  --spacing-2xl: 4rem;     /* 64px */
+  --spacing-3xl: 6rem;     /* 96px */
+
+  /* Radius Tokens (Strict 4px/8px or sharp) */
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-none: 0px;
+
+  /* Transitions */
+  --trans-fast: 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  --trans-base: 220ms cubic-bezier(0.16, 1, 0.3, 1);
+  --trans-smooth: 350ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Layout Constraints */
+  --container-max-width: 1440px;
+  --header-height: 56px;
+  --grid-gutter: 1.5rem;
+}
+
+/* Light Mode Overrides (High-Visibility Daylight Telemetry) */
+[data-theme="light"] {
+  --color-canvas-base: #F5F6F8;
+  --color-surface-1: #FFFFFF;
+  --color-surface-2: #EDEFF2;
+  --color-surface-3: #E2E5E9;
+  --color-surface-highest: #D0D4DA;
+  --color-surface-container: #E8EBEF;
+  --color-surface-bright: #FFFFFF;
+
+  --color-primary: #E65100;
+  --color-primary-dim: #D73B00;
+  --color-primary-glow: rgba(230, 81, 0, 0.15);
+  --color-secondary: #C43B00;
+  --color-tertiary: #BF360C;
+
+  --color-text-primary: #111827;
+  --color-text-secondary: #374151;
+  --color-text-muted: #6B7280;
+  --color-text-dim: #9CA3AF;
+  --color-text-inverse: #FFFFFF;
+
+  --color-border-hairline: rgba(0, 0, 0, 0.08);
+  --color-border-subtle: rgba(0, 0, 0, 0.14);
+  --color-border-accent: rgba(230, 81, 0, 0.45);
+  --color-border-accent-subtle: rgba(230, 81, 0, 0.2);
+
+  --color-status-active: #059669;
+  --color-status-active-glow: rgba(5, 150, 105, 0.25);
+}
