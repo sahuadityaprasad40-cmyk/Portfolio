@@ -1,220 +1,211 @@
 import React, { useEffect, useRef, useCallback } from 'react';
 
 /**
- * BlackholeEffect
- * Renders a full-screen canvas overlay with a gravitational black hole
- * that follows the mouse cursor. Features:
- *  - Dark singularity core
- *  - Spinning accretion disk particles (amber/orange glow — matching brand)
- *  - Gravitational lensing distortion rings
- *  - Background image revealed in a radial window around cursor
- *  - Smooth lerp-based mouse tracking
+ * BlackholeEffect — Custom cursor replacement.
+ *
+ * Renders a full-screen transparent canvas fixed on top of everything.
+ * The default OS cursor is hidden via CSS (cursor: none on body).
+ * In its place, a miniature black hole is drawn at the mouse position:
+ *   • Deep black singularity core
+ *   • Spinning amber/gold accretion disk (ellipse particles)
+ *   • Gravitational lensing glow rings
+ *   • Relativistic jets (vertical glows above/below)
+ *   • Smooth lerp tracking
  */
 export default function BlackholeEffect() {
   const canvasRef = useRef(null);
-  const rafRef = useRef(null);
+  const rafRef    = useRef(null);
+
   const stateRef = useRef({
-    mouse: { x: -9999, y: -9999 },
-    target: { x: -9999, y: -9999 },
+    mouse:     { x: -999, y: -999 },
+    target:    { x: -999, y: -999 },
     particles: [],
-    angle: 0,
-    entered: false,
+    spin:      0,
+    entered:   false,
   });
 
-  // ── Build accretion disk particles ────────────────────────────────────────
-  const buildParticles = useCallback((count = 280) => {
-    const particles = [];
-    for (let i = 0; i < count; i++) {
-      const orbitRadius = 60 + Math.random() * 110;
-      const speed = (0.004 + Math.random() * 0.012) * (Math.random() < 0.5 ? 1 : -1);
-      const angleOffset = Math.random() * Math.PI * 2;
-      const size = 0.6 + Math.random() * 2.2;
-      // elongated ellipse ratio to simulate perspective disk
-      const yRatio = 0.22 + Math.random() * 0.32;
-      const alpha = 0.15 + Math.random() * 0.75;
-      // colour: deep amber → orange → white-hot
-      const hue = 20 + Math.random() * 30;        // 20–50 → amber/gold
-      const sat = 80 + Math.random() * 20;
-      const lit = 55 + Math.random() * 35;
-      particles.push({ orbitRadius, speed, angleOffset, size, yRatio, alpha, hue, sat, lit });
+  // ── Build accretion particles ──────────────────────────────────────────────
+  const buildParticles = useCallback(() => {
+    const list = [];
+    for (let i = 0; i < 200; i++) {
+      list.push({
+        r:       22 + Math.random() * 36,          // orbit radius
+        speed:   (0.018 + Math.random() * 0.042) * (Math.random() < 0.5 ? 1 : -1),
+        phase:   Math.random() * Math.PI * 2,
+        yRatio:  0.18 + Math.random() * 0.28,      // ellipse flatten
+        size:    0.5 + Math.random() * 1.8,
+        alpha:   0.25 + Math.random() * 0.75,
+        hue:     18 + Math.random() * 28,          // amber-gold
+        sat:     85 + Math.random() * 15,
+        lit:     55 + Math.random() * 35,
+      });
     }
-    return particles;
+    return list;
   }, []);
 
   useEffect(() => {
     stateRef.current.particles = buildParticles();
   }, [buildParticles]);
 
-  // ── Mouse tracking ────────────────────────────────────────────────────────
+  // ── Mouse / touch tracking ─────────────────────────────────────────────────
   useEffect(() => {
-    const onMouseMove = (e) => {
-      stateRef.current.target.x = e.clientX;
-      stateRef.current.target.y = e.clientY;
-      stateRef.current.entered = true;
+    const move = (e) => {
+      const x = e.clientX ?? e.touches?.[0]?.clientX;
+      const y = e.clientY ?? e.touches?.[0]?.clientY;
+      if (x !== undefined) {
+        stateRef.current.target.x = x;
+        stateRef.current.target.y = y;
+        stateRef.current.entered  = true;
+      }
     };
-    const onMouseLeave = () => {
-      stateRef.current.entered = false;
-    };
-    window.addEventListener('mousemove', onMouseMove);
-    document.addEventListener('mouseleave', onMouseLeave);
+    const leave = () => { stateRef.current.entered = false; };
+
+    window.addEventListener('mousemove',  move,  { passive: true });
+    window.addEventListener('touchmove',  move,  { passive: true });
+    document.addEventListener('mouseleave', leave);
     return () => {
-      window.removeEventListener('mousemove', onMouseMove);
-      document.removeEventListener('mouseleave', onMouseLeave);
+      window.removeEventListener('mousemove',  move);
+      window.removeEventListener('touchmove',  move);
+      document.removeEventListener('mouseleave', leave);
     };
   }, []);
 
-  // ── Render loop ───────────────────────────────────────────────────────────
+  // ── Render loop ────────────────────────────────────────────────────────────
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
 
     const resize = () => {
-      canvas.width = window.innerWidth;
+      canvas.width  = window.innerWidth;
       canvas.height = window.innerHeight;
     };
     resize();
     window.addEventListener('resize', resize);
 
-    const LERP = 0.085; // smoothing factor
+    const LERP = 0.12;
 
-    const draw = () => {
-      const s = stateRef.current;
-      const W = canvas.width;
-      const H = canvas.height;
+    const drawFrame = () => {
+      const s  = stateRef.current;
+      const W  = canvas.width;
+      const H  = canvas.height;
 
-      // Lerp mouse toward target
-      s.mouse.x += (s.target.x - s.mouse.x) * LERP;
-      s.mouse.y += (s.target.y - s.mouse.y) * LERP;
-
-      const mx = s.mouse.x;
-      const my = s.mouse.y;
-
-      // ── Clear canvas ────────────────────────────────────────────────────
       ctx.clearRect(0, 0, W, H);
 
       if (!s.entered) {
-        // Full dark veil when mouse hasn't entered
-        ctx.fillStyle = 'rgba(8,10,14,0.96)';
-        ctx.fillRect(0, 0, W, H);
-        rafRef.current = requestAnimationFrame(draw);
+        rafRef.current = requestAnimationFrame(drawFrame);
         return;
       }
 
-      // ── Step 1: Dark veil with radial "window" cut out ──────────────────
-      // We draw a full dark rect, then punch a soft circular reveal
-      const revealRadius = 260;
-      const veil = ctx.createRadialGradient(mx, my, 0, mx, my, revealRadius);
-      veil.addColorStop(0,    'rgba(8,10,14,0.0)');   // fully transparent at centre
-      veil.addColorStop(0.45, 'rgba(8,10,14,0.0)');
-      veil.addColorStop(0.78, 'rgba(8,10,14,0.55)');
-      veil.addColorStop(1,    'rgba(8,10,14,0.96)');
+      // Smooth follow
+      s.mouse.x += (s.target.x - s.mouse.x) * LERP;
+      s.mouse.y += (s.target.y - s.mouse.y) * LERP;
+      const mx = s.mouse.x;
+      const my = s.mouse.y;
 
-      ctx.fillStyle = 'rgba(8,10,14,0.96)';
-      ctx.fillRect(0, 0, W, H);
+      s.spin += 0.012;
 
-      // Composite the reveal hole using destination-out then back to source-over
+      // ── 1. Outer glow halo ────────────────────────────────────────────────
+      const halo = ctx.createRadialGradient(mx, my, 0, mx, my, 72);
+      halo.addColorStop(0,    'rgba(255, 130, 20, 0.18)');
+      halo.addColorStop(0.4,  'rgba(255,  80,  0, 0.08)');
+      halo.addColorStop(1,    'rgba(0,     0,  0, 0)');
       ctx.save();
-      ctx.globalCompositeOperation = 'destination-out';
-      const hole = ctx.createRadialGradient(mx, my, 0, mx, my, revealRadius);
-      hole.addColorStop(0,    'rgba(0,0,0,1)');
-      hole.addColorStop(0.5,  'rgba(0,0,0,1)');
-      hole.addColorStop(0.78, 'rgba(0,0,0,0.5)');
-      hole.addColorStop(1,    'rgba(0,0,0,0)');
-      ctx.fillStyle = hole;
+      ctx.globalCompositeOperation = 'screen';
+      ctx.fillStyle = halo;
       ctx.beginPath();
-      ctx.arc(mx, my, revealRadius, 0, Math.PI * 2);
+      ctx.arc(mx, my, 72, 0, Math.PI * 2);
       ctx.fill();
       ctx.restore();
 
-      // ── Step 2: Gravitational lensing distortion rings ──────────────────
-      const ringCount = 5;
-      for (let r = 0; r < ringCount; r++) {
-        const ringR = 38 + r * 28;
-        const ringAlpha = 0.06 - r * 0.01;
+      // ── 2. Gravitational lensing rings ────────────────────────────────────
+      const rings = [
+        { rx: 28, ry: 7,  lw: 1.8, alpha: 0.55 },
+        { rx: 40, ry: 10, lw: 1.2, alpha: 0.30 },
+        { rx: 54, ry: 13, lw: 0.8, alpha: 0.16 },
+      ];
+      rings.forEach(({ rx, ry, lw, alpha }) => {
         ctx.save();
-        ctx.strokeStyle = `rgba(255,140,30,${ringAlpha})`;
-        ctx.lineWidth = 1 + (ringCount - r) * 0.4;
-        ctx.shadowColor = 'rgba(255,110,0,0.6)';
-        ctx.shadowBlur = 8;
+        ctx.strokeStyle = `rgba(255, 140, 30, ${alpha})`;
+        ctx.lineWidth   = lw;
+        ctx.shadowColor = 'rgba(255, 110, 0, 0.9)';
+        ctx.shadowBlur  = 10;
         ctx.beginPath();
-        ctx.ellipse(mx, my, ringR, ringR * 0.35, 0, 0, Math.PI * 2);
+        ctx.ellipse(mx, my, rx, ry, 0, 0, Math.PI * 2);
         ctx.stroke();
         ctx.restore();
-      }
+      });
 
-      // ── Step 3: Accretion disk particles ────────────────────────────────
-      s.angle += 0.008;
+      // ── 3. Accretion disk particles ───────────────────────────────────────
       s.particles.forEach((p) => {
-        p.angleOffset += p.speed;
-        const a = p.angleOffset + s.angle;
-        const px = mx + Math.cos(a) * p.orbitRadius;
-        const py = my + Math.sin(a) * p.orbitRadius * p.yRatio;
+        p.phase += p.speed;
+        const angle = p.phase + s.spin;
+        const px    = mx + Math.cos(angle) * p.r;
+        const py    = my + Math.sin(angle) * p.r * p.yRatio;
 
-        // Depth cue: particles at the "back" (sin negative) are dimmer
-        const depthAlpha = p.alpha * (0.45 + 0.55 * ((Math.sin(a) + 1) / 2));
+        // Depth: rear particles dimmer
+        const depth = (Math.sin(angle) + 1) / 2;   // 0 = back, 1 = front
+        const a     = p.alpha * (0.3 + 0.7 * depth);
+
+        // Skip particles that are inside the singularity radius
+        const dx = px - mx, dy = py - my;
+        if (Math.sqrt(dx * dx + dy * dy) < 9) return;
 
         ctx.save();
-        ctx.globalAlpha = depthAlpha;
-        ctx.fillStyle = `hsl(${p.hue},${p.sat}%,${p.lit}%)`;
-        ctx.shadowColor = `hsl(${p.hue},100%,70%)`;
-        ctx.shadowBlur = 6;
+        ctx.globalAlpha  = a;
+        ctx.fillStyle    = `hsl(${p.hue}, ${p.sat}%, ${p.lit}%)`;
+        ctx.shadowColor  = `hsl(${p.hue}, 100%, 72%)`;
+        ctx.shadowBlur   = 5;
         ctx.beginPath();
         ctx.arc(px, py, p.size, 0, Math.PI * 2);
         ctx.fill();
         ctx.restore();
       });
 
-      // ── Step 4: Jet / photon sphere glow streaks ────────────────────────
-      const jetLen = 90;
+      // ── 4. Relativistic polar jets ────────────────────────────────────────
       [-1, 1].forEach((dir) => {
-        const grad = ctx.createLinearGradient(
-          mx, my,
-          mx, my + dir * jetLen
-        );
-        grad.addColorStop(0,   'rgba(255,140,50,0.18)');
-        grad.addColorStop(0.5, 'rgba(255,90,0,0.06)');
-        grad.addColorStop(1,   'rgba(255,60,0,0)');
+        const jetH  = 55;
+        const cy    = my + dir * jetH * 0.5;
+        const jet   = ctx.createLinearGradient(mx, my, mx, my + dir * jetH);
+        jet.addColorStop(0,   'rgba(255, 160, 50, 0.22)');
+        jet.addColorStop(0.5, 'rgba(255,  90,  0, 0.08)');
+        jet.addColorStop(1,   'rgba(  0,   0,  0, 0)');
         ctx.save();
         ctx.globalCompositeOperation = 'screen';
-        ctx.fillStyle = grad;
+        ctx.fillStyle = jet;
         ctx.beginPath();
-        ctx.ellipse(mx, my + dir * jetLen * 0.5, 6, jetLen * 0.5, 0, 0, Math.PI * 2);
+        ctx.ellipse(mx, cy, 5, jetH * 0.5, 0, 0, Math.PI * 2);
         ctx.fill();
         ctx.restore();
       });
 
-      // ── Step 5: Singularity core ─────────────────────────────────────────
-      // Outer photon ring glow
-      const outerGlow = ctx.createRadialGradient(mx, my, 12, mx, my, 42);
-      outerGlow.addColorStop(0,    'rgba(255,140,30,0.28)');
-      outerGlow.addColorStop(0.55, 'rgba(255,80,0,0.12)');
-      outerGlow.addColorStop(1,    'rgba(0,0,0,0)');
+      // ── 5. Photon sphere bright ring ──────────────────────────────────────
       ctx.save();
-      ctx.globalCompositeOperation = 'screen';
-      ctx.fillStyle = outerGlow;
+      ctx.strokeStyle = 'rgba(255, 200, 80, 0.70)';
+      ctx.lineWidth   = 1.2;
+      ctx.shadowColor = 'rgba(255, 160, 30, 1)';
+      ctx.shadowBlur  = 14;
       ctx.beginPath();
-      ctx.arc(mx, my, 42, 0, Math.PI * 2);
+      ctx.ellipse(mx, my, 13, 3.5, 0, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.restore();
+
+      // ── 6. Singularity — absolute black core ──────────────────────────────
+      const core = ctx.createRadialGradient(mx, my, 0, mx, my, 11);
+      core.addColorStop(0,    '#000000');
+      core.addColorStop(0.75, '#000000');
+      core.addColorStop(1,    'rgba(0,0,0,0)');
+      ctx.save();
+      ctx.fillStyle = core;
+      ctx.beginPath();
+      ctx.arc(mx, my, 11, 0, Math.PI * 2);
       ctx.fill();
       ctx.restore();
 
-      // Black singularity
-      ctx.save();
-      const coreGrad = ctx.createRadialGradient(mx, my, 0, mx, my, 20);
-      coreGrad.addColorStop(0,   '#000000');
-      coreGrad.addColorStop(0.7, '#050505');
-      coreGrad.addColorStop(1,   'rgba(0,0,0,0)');
-      ctx.fillStyle = coreGrad;
-      ctx.beginPath();
-      ctx.arc(mx, my, 20, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
-
-      rafRef.current = requestAnimationFrame(draw);
+      rafRef.current = requestAnimationFrame(drawFrame);
     };
 
-    rafRef.current = requestAnimationFrame(draw);
-
+    rafRef.current = requestAnimationFrame(drawFrame);
     return () => {
       cancelAnimationFrame(rafRef.current);
       window.removeEventListener('resize', resize);
@@ -225,11 +216,11 @@ export default function BlackholeEffect() {
     <canvas
       ref={canvasRef}
       style={{
-        position: 'fixed',
-        inset: 0,
-        zIndex: 0,
-        pointerEvents: 'none',
-        display: 'block',
+        position:       'fixed',
+        inset:          0,
+        zIndex:         9999,
+        pointerEvents:  'none',
+        display:        'block',
       }}
       aria-hidden="true"
     />
