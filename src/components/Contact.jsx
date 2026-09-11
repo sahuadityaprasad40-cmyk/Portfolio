@@ -22,7 +22,7 @@ export default function Contact({ onShowToast }) {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!name.trim() || !email.trim() || !message.trim()) {
       onShowToast('TRANSMISSION ERROR: ALL FIELDS REQUIRED');
@@ -30,13 +30,49 @@ export default function Contact({ onShowToast }) {
     }
 
     setIsSubmitting(true);
-    setTimeout(() => {
-      onShowToast(`PACKET DISPATCHED // THANK YOU, ${name.toUpperCase()}`);
-      setName('');
-      setEmail('');
-      setMessage('');
+    try {
+      const response = await fetch('https://formsubmit.co/ajax/sahuadityaprasad40@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim(),
+          message: message.trim(),
+          _subject: `[Portfolio Signal] New Message from ${name.trim()}`,
+          _template: 'table',
+          _captcha: 'false',
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success === 'true' || data.success === true) {
+        onShowToast(`PACKET DISPATCHED // THANK YOU, ${name.toUpperCase()}`);
+        setName('');
+        setEmail('');
+        setMessage('');
+      } else if (data.message && data.message.toLowerCase().includes('activation')) {
+        onShowToast('ACTIVATION EMAIL SENT // CHECK YOUR GMAIL INBOX TO CONFIRM');
+        setName('');
+        setEmail('');
+        setMessage('');
+      } else {
+        onShowToast(`TRANSMISSION STATUS // ${data.message || 'DISPATCHED'}`);
+        setName('');
+        setEmail('');
+        setMessage('');
+      }
+    } catch (err) {
+      onShowToast('NETWORK ISSUE // DISPATCHING VIA DIRECT MAIL CLIENT');
+      const subject = encodeURIComponent(`[Portfolio Signal] Message from ${name}`);
+      const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
+      window.location.href = `mailto:sahuadityaprasad40@gmail.com?subject=${subject}&body=${body}`;
+    } finally {
       setIsSubmitting(false);
-    }, 700);
+    }
   };
 
   return (
@@ -122,11 +158,15 @@ export default function Contact({ onShowToast }) {
           <form className="transmission-form" onSubmit={handleSubmit} noValidate>
             <span className="telemetry-tag">DISPATCH PACKET // ENCRYPTED</span>
 
+            {/* Anti-spam honeypot */}
+            <input type="checkbox" name="botcheck" style={{ display: 'none' }} tabIndex={-1} autoComplete="off" />
+
             <div className="form-field">
               <label htmlFor="form-name" className="form-label">TRANSMITTER IDENTITY (NAME)</label>
               <input
                 type="text"
                 id="form-name"
+                name="name"
                 className="form-input"
                 placeholder="e.g. Lead Architect // Alex Vance"
                 value={name}
@@ -140,6 +180,7 @@ export default function Contact({ onShowToast }) {
               <input
                 type="email"
                 id="form-email"
+                name="email"
                 className="form-input"
                 placeholder="e.g. alex@engineering.corp"
                 value={email}
@@ -152,6 +193,7 @@ export default function Contact({ onShowToast }) {
               <label htmlFor="form-message" className="form-label">PAYLOAD (TRANSMISSION MESSAGE)</label>
               <textarea
                 id="form-message"
+                name="message"
                 className="form-textarea"
                 placeholder="Detail project scope, opportunity parameters, or technical inquiry..."
                 value={message}
