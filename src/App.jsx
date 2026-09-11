@@ -11,7 +11,7 @@ import Contact from './components/Contact';
 import TerminalModal from './components/TerminalModal';
 import Toast from './components/Toast';
 import Footer from './components/Footer';
-import BlackholeEffect from './components/BlackholeEffect';
+
 
 export default function App() {
   const { theme, toggleTheme } = useTheme();
@@ -70,10 +70,7 @@ export default function App() {
 
   return (
     <>
-      {/* Black hole canvas — fixed, behind everything */}
-      <BlackholeEffect />
-
-      {/* All page content sits above the canvas */}
+      {/* Page content */}
       <div style={{ position: 'relative', zIndex: 1 }}>
         <TelemetryHud
           theme={theme}
