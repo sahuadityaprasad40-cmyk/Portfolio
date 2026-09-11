@@ -40,6 +40,13 @@ body {
   overflow-x: hidden;
   min-height: 100vh;
   transition: background-color var(--trans-smooth), color var(--trans-smooth);
+  cursor: none;
+}
+
+/* Hide OS cursor everywhere — canvas black hole replaces it */
+*, *::before, *::after,
+a, button, input, textarea, select, label, [role="button"] {
+  cursor: none !important;
 }
 
 ::-webkit-scrollbar {
