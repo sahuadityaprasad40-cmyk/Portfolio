@@ -20,6 +20,11 @@ html {
 
 body {
   background-color: var(--color-canvas-base);
+  background-image: url('/assets/images/background.jpg');
+  background-size: cover;
+  background-position: center top;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
   color: var(--color-text-secondary);
   font-family: var(--font-body);
   font-size: 0.9375rem;

@@ -11,6 +11,7 @@ import Contact from './components/Contact';
 import TerminalModal from './components/TerminalModal';
 import Toast from './components/Toast';
 import Footer from './components/Footer';
+import BlackholeEffect from './components/BlackholeEffect';
 
 export default function App() {
   const { theme, toggleTheme } = useTheme();
@@ -69,30 +70,36 @@ export default function App() {
 
   return (
     <>
-      <TelemetryHud
-        theme={theme}
-        toggleTheme={toggleTheme}
-        onOpenTerminal={() => setIsTerminalOpen(true)}
-        activeSection={activeSection}
-      />
+      {/* Black hole canvas — fixed, behind everything */}
+      <BlackholeEffect />
 
-      <main id="main-content">
-        <Hero uptimeText={uptimeText} pingText={pingText} />
-        <Projects />
-        <Skills />
-        <Timeline />
-        <Contact onShowToast={triggerToast} />
-      </main>
+      {/* All page content sits above the canvas */}
+      <div style={{ position: 'relative', zIndex: 1 }}>
+        <TelemetryHud
+          theme={theme}
+          toggleTheme={toggleTheme}
+          onOpenTerminal={() => setIsTerminalOpen(true)}
+          activeSection={activeSection}
+        />
 
-      <TerminalModal
-        isOpen={isTerminalOpen}
-        onClose={() => setIsTerminalOpen(false)}
-        onToggleTheme={toggleTheme}
-      />
+        <main id="main-content">
+          <Hero uptimeText={uptimeText} pingText={pingText} />
+          <Projects />
+          <Skills />
+          <Timeline />
+          <Contact onShowToast={triggerToast} />
+        </main>
 
-      <Toast message={toastMessage} />
+        <TerminalModal
+          isOpen={isTerminalOpen}
+          onClose={() => setIsTerminalOpen(false)}
+          onToggleTheme={toggleTheme}
+        />
 
-      <Footer />
+        <Toast message={toastMessage} />
+
+        <Footer />
+      </div>
     </>
   );
 }
